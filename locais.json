@@ -1,17 +1,16 @@
 {
     "locais": [
-      {
-        "id": 1,
-        "titulo": "Praia do Jacaré",
-        "descricao": "Famoso pôr do sol ao som do Bolero de Ravel.",
-        "foto": "https://exemplo.com/jacare.jpg"
-      },
-      {
-        "id": 2,
-        "titulo": "Cabo Branco",
-        "descricao": "Ponto mais oriental das Américas.",
-        "foto": "https://exemplo.com/cabo-branco.jpg"
-      }
+        {
+            "id": 1,
+            "titulo": "Praia do Jacaré",
+            "descricao": "Famoso pôr do sol ao som do Bolero de Ravel.",
+            "foto": "https://exemplo.com/jacare.jpg"
+        },
+        {
+            "id": 2,
+            "titulo": "Cabo Branco",
+            "descricao": "Ponto mais oriental das Américas.",
+            "foto": "https://exemplo.com/cabo-branco.jpg"
+        }
     ]
-  }
-  
+}  

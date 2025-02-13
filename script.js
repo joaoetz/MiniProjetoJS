@@ -7,30 +7,51 @@ document.getElementById("localForm").addEventListener("submit", async function (
     const descricao = document.getElementById("descricao").value;
     const foto = document.getElementById("foto").value;
 
-    const local = { titulo, descricao, foto };
-    
+    let local = { titulo, descricao, foto };
+
     if (id) {
-        await fetch(`${apiUrl}/${id}`, {
+        // Converte o ID para número antes de editar
+        local.id = Number(id);
+
+        await fetch(`${apiUrl}/${local.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(local)
         });
     } else {
+        // Gera um novo ID numérico antes de adicionar
+        local.id = await gerarIdNumerico();
+
         await fetch(apiUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(local)
         });
     }
+
     carregarLocais();
     this.reset();
 });
+
+// Função para gerar um ID numérico sempre crescente
+async function gerarIdNumerico() {
+    const response = await fetch(apiUrl);
+    const locais = await response.json();
+
+    if (locais.length === 0) {
+        return 1; // Se não houver locais, começa do 1
+    }
+
+    const maxId = Math.max(...locais.map(l => Number(l.id))); // Encontra o maior ID numérico
+    return maxId + 1;
+}
 
 async function carregarLocais() {
     const response = await fetch(apiUrl);
     const locais = await response.json();
     const locaisDiv = document.getElementById("locais");
     locaisDiv.innerHTML = "";
+
     locais.forEach(local => {
         const div = document.createElement("div");
         div.innerHTML = `
@@ -52,7 +73,7 @@ function editarLocal(id, titulo, descricao, foto) {
 }
 
 async function excluirLocal(id) {
-    await fetch(`${apiUrl}/${id}`, { method: "DELETE" });
+    await fetch(`${apiUrl}/${Number(id)}`, { method: "DELETE" }); // Converte ID para número
     carregarLocais();
 }
 
